@@ -14,20 +14,12 @@ public enum NumberCard {
     QUEEN(12, "Q"),
     KING(13, "K"),
     ACE(14, "A");
-    private Integer valueCard;
-    private String nameShort;
+    private final Integer valueCard;
+    private final String nameShort;
 
     NumberCard(Integer valueCard, String nameShort) {
         this.valueCard = valueCard;
         this.nameShort = nameShort;
-    }
-
-    public Integer getValueCard() {
-        return valueCard;
-    }
-
-    public String getNameShort() {
-        return nameShort;
     }
 
     public static NumberCard getEnumFromValue(Integer valueCard) {
@@ -77,5 +69,13 @@ public enum NumberCard {
                 /*break*/
         }
         return numberCard;
+    }
+
+    public Integer getValueCard() {
+        return valueCard;
+    }
+
+    public String getNameShort() {
+        return nameShort;
     }
 }

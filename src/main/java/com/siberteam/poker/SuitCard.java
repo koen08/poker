@@ -13,14 +13,6 @@ public enum SuitCard {
         this.nameShort = nameShort;
     }
 
-    public Integer getValueSuit() {
-        return valueSuit;
-    }
-
-    public String getNameShort() {
-        return nameShort;
-    }
-
     public static SuitCard getEnumFromValue(Integer valueSuit) {
         SuitCard suitCard = null;
         switch (valueSuit) {
@@ -43,9 +35,9 @@ public enum SuitCard {
         return suitCard;
     }
 
-    public static SuitCard getEnumFromNameShort(String nameShort){
+    public static SuitCard getEnumFromNameShort(String nameShort) {
         SuitCard suitCard = null;
-        switch (nameShort){
+        switch (nameShort) {
             case "H":
                 suitCard = SuitCard.HEARTS;
                 break;
@@ -62,5 +54,13 @@ public enum SuitCard {
                 throw new IllegalArgumentException("No enum constant value" + nameShort);
         }
         return suitCard;
+    }
+
+    public Integer getValueSuit() {
+        return valueSuit;
+    }
+
+    public String getNameShort() {
+        return nameShort;
     }
 }

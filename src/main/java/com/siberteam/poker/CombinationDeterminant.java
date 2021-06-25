@@ -1,17 +1,24 @@
 package com.siberteam.poker;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class CombinationDeterminant {
+    private final PokerCombinations pokerCombination;
+    public Integer powerHand;
 
     public CombinationDeterminant(List<PokerCard> cardValueList) {
         if (isCombinationWithOneSuit(cardValueList)) {
-            System.out.println(determineCombinationsSameSuit(cardValueList));
+            pokerCombination = determineCombinationsSameSuit(cardValueList);
         } else {
-            System.out.println(definePairsNonSuit(cardValueList));
+            pokerCombination = definePairsNonSuit(cardValueList);
         }
+    }
+
+    public PokerCombinations getPokerCombination() {
+        pokerCombination.countInvolvedCard = powerHand;
+        return pokerCombination;
     }
 
     public boolean isCombinationWithOneSuit(List<PokerCard> listPokerCard) {
@@ -25,16 +32,17 @@ public class CombinationDeterminant {
         return counter == 4;
     }
 
-    public String determineCombinationsSameSuit(List<PokerCard> listPokerCard) {
+    public PokerCombinations determineCombinationsSameSuit(List<PokerCard> listPokerCard) {
+        PokerCombinations pc;
         if (listPokerCard.get(0).getNumberCard().getValueCard().equals(NumberCard.TEN.getValueCard())
                 && listPokerCard.get(4).getNumberCard().getValueCard().equals(NumberCard.ACE.getValueCard())) {
-            return "Это Роял Стрит Флеш";
-        }
-        if (isNumberInOrder(listPokerCard)) {
-            return "Это Стрит Флеш";
+            pc = PokerCombinations.ROYAL_FLUSH;
+        } else if (isNumberInOrder(listPokerCard)) {
+            pc = PokerCombinations.STRAIGHT_FLUSH;
         } else {
-            return "Это Флеш";
+            pc = PokerCombinations.FLUSH;
         }
+        return pc;
     }
 
     public boolean isNumberInOrder(List<PokerCard> listPokerCard) {
@@ -46,57 +54,33 @@ public class CombinationDeterminant {
         return counterOrder == 4;
     }
 
-    public String definePairsNonSuit(List<PokerCard> listPokerCard) {
-        Map<Integer, Integer> map = new HashMap<>();
+    public PokerCombinations definePairsNonSuit(List<PokerCard> listPokerCard) {
+        Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < listPokerCard.size() - 1; i++) {
-            if (!listPokerCard.get(i).getNumberCard().getValueCard().equals(
+            if (listPokerCard.get(i).getNumberCard().getValueCard().equals(
                     listPokerCard.get(i + 1).getNumberCard().getValueCard())) {
-                continue;
-            } else if (map.containsKey(listPokerCard.get(i).getNumberCard().getValueCard())) {
-                Integer count = map.get(listPokerCard.get(i).getNumberCard().getValueCard());
+                Integer count = map.getOrDefault(listPokerCard.get(i).getNumberCard().getValueCard(), 1);
                 count++;
                 map.put(listPokerCard.get(i).getNumberCard().getValueCard(), count);
-            } else {
-                map.put(listPokerCard.get(i).getNumberCard().getValueCard(), 2);
             }
         }
-        if (isNumberInOrder(listPokerCard)) {
-            map.put(12345, 5);
-        }
         if (map.isEmpty()) {
-            map.put(listPokerCard.get(3).getNumberCard().getValueCard(), 1);
+            if (isNumberInOrder(listPokerCard)) {
+                map.put(listPokerCard.stream().mapToInt(i -> i.getNumberCard().getValueCard()).sum(), 5);
+            } else map.put(listPokerCard.get(3).getNumberCard().getValueCard(), 1);
         }
         return defineCombinationWithoutSuit(map);
     }
 
-    public String defineCombinationWithoutSuit(Map<Integer, Integer> map) {
+    public PokerCombinations defineCombinationWithoutSuit(Map<Integer, Integer> map) {
+        powerHand = 0;
         StringBuilder keyCard = new StringBuilder();
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             keyCard.append(entry.getValue());
+            powerHand += entry.getValue() * entry.getKey();
         }
-        String keyCardString = keyCard.toString();
-        if (keyCardString.equals("2")) {
-            return "Это пара";
-        }
-        if (keyCardString.equals("3")) {
-            return "Это сет";
-        }
-        if (keyCardString.equals("22")) {
-            return "Это две пары";
-        }
-        if (keyCardString.equals("23") || keyCardString.equals("32")) {
-            return "Это фулл хаус";
-        }
-        if (keyCardString.equals("4")) {
-            return "Это каре";
-        }
-        if (keyCardString.equals("5")) {
-            return "Это стрит";
-        }
-        if (keyCardString.equals("1")) {
-            return "Старшая карта";
-        }
-        return "Не смог определить";
+        return PokerCombinations.getEnumFromViewCombinationInNumber(keyCard.toString());
     }
 
 }
+
