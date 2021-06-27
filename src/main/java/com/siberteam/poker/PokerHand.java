@@ -6,21 +6,23 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class PokerHand {
-    //    public static final Comparator<PokerHand> pokerHandComparator =
-//            Comparator.comparingInt(o -> o.power);
     public static final Comparator<PokerHand> pokerHandComparator = new Comparator<PokerHand>() {
         @Override
         public int compare(PokerHand o1, PokerHand o2) {
             Integer firstPower = o1.power;
             Integer secondPower = o2.power;
             if (o1.power.equals(o2.power)) {
-                firstPower += o1.combinationDeterminant.powerHand;
-                secondPower += o2.combinationDeterminant.powerHand;
-                if (firstPower.equals(secondPower)){
-                    for (int i = o1.power; i < o1.listPokerCard.size(); i++) {
+                firstPower += o1.combinationDeterminant.powerCombination;
+                secondPower += o2.combinationDeterminant.powerCombination;
+                if (firstPower.equals(secondPower)) {
+                    for (int i = o1.power + 1; i < o1.listPokerCard.size(); i++) {
                         firstPower += o1.listPokerCard.get(i).getNumberCard().getValueCard();
                         secondPower += o2.listPokerCard.get(i).getNumberCard().getValueCard();
                     }
+                }
+                if (firstPower.equals(secondPower)) {
+                    firstPower += o1.listPokerCard.get(4).getNumberCard().getValueCard();
+                    secondPower += o2.listPokerCard.get(4).getNumberCard().getValueCard();
                 }
             }
             return Integer.compare(firstPower, secondPower);

@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 public class CombinationDeterminant {
     private final PokerCombinations pokerCombination;
-    public Integer powerHand;
+    public Integer powerCombination;
 
     public CombinationDeterminant(List<PokerCard> cardValueList) {
         if (isCombinationWithOneSuit(cardValueList)) {
@@ -17,7 +17,7 @@ public class CombinationDeterminant {
     }
 
     public PokerCombinations getPokerCombination() {
-        pokerCombination.countInvolvedCard = powerHand;
+        pokerCombination.countInvolvedCard = powerCombination;
         return pokerCombination;
     }
 
@@ -73,11 +73,11 @@ public class CombinationDeterminant {
     }
 
     public PokerCombinations defineCombinationWithoutSuit(Map<Integer, Integer> map) {
-        powerHand = 0;
+        powerCombination = 0;
         StringBuilder keyCard = new StringBuilder();
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             keyCard.append(entry.getValue());
-            powerHand += entry.getValue() * entry.getKey();
+            powerCombination += entry.getValue() * entry.getKey();
         }
         return PokerCombinations.getEnumFromViewCombinationInNumber(keyCard.toString());
     }
