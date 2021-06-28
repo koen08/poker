@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 public class CombinationDeterminant {
     private final PokerCombinations pokerCombination;
-    public Integer powerCombination;
+    private Integer powerCombination = 0;
 
     public CombinationDeterminant(List<PokerCard> cardValueList) {
         if (isCombinationWithOneSuit(cardValueList)) {
@@ -14,11 +14,6 @@ public class CombinationDeterminant {
         } else {
             pokerCombination = definePairsNonSuit(cardValueList);
         }
-    }
-
-    public PokerCombinations getPokerCombination() {
-        pokerCombination.countInvolvedCard = powerCombination;
-        return pokerCombination;
     }
 
     public boolean isCombinationWithOneSuit(List<PokerCard> listPokerCard) {
@@ -42,7 +37,16 @@ public class CombinationDeterminant {
         } else {
             pc = PokerCombinations.FLUSH;
         }
+        powerCombination += calculatePowerCombinationsWithSuit(listPokerCard);
         return pc;
+    }
+
+    private Integer calculatePowerCombinationsWithSuit(List<PokerCard> listPokerCard) {
+        Integer power = 0;
+        for (PokerCard pokerCard : listPokerCard){
+            power += pokerCard.getNumberCard().getValueCard();
+        }
+        return power;
     }
 
     public boolean isNumberInOrder(List<PokerCard> listPokerCard) {
@@ -67,13 +71,12 @@ public class CombinationDeterminant {
         if (map.isEmpty()) {
             if (isNumberInOrder(listPokerCard)) {
                 map.put(listPokerCard.stream().mapToInt(i -> i.getNumberCard().getValueCard()).sum(), 5);
-            } else map.put(listPokerCard.get(3).getNumberCard().getValueCard(), 1);
+            } else map.put(listPokerCard.get(4).getNumberCard().getValueCard(), 1);
         }
         return defineCombinationWithoutSuit(map);
     }
 
     public PokerCombinations defineCombinationWithoutSuit(Map<Integer, Integer> map) {
-        powerCombination = 0;
         StringBuilder keyCard = new StringBuilder();
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             keyCard.append(entry.getValue());
@@ -82,5 +85,12 @@ public class CombinationDeterminant {
         return PokerCombinations.getEnumFromViewCombinationInNumber(keyCard.toString());
     }
 
+    public PokerCombinations getPokerCombination() {
+        return pokerCombination;
+    }
+
+    public Integer getPowerCombination() {
+        return powerCombination;
+    }
 }
 

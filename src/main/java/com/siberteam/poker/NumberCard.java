@@ -66,7 +66,7 @@ public enum NumberCard {
                 break;
             default:
                 throw new IllegalArgumentException("No enum constant value - " + valueCard);
-                /*break*/
+                /* falls through. */
         }
         return numberCard;
     }

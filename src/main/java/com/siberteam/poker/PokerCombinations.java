@@ -13,7 +13,6 @@ public enum PokerCombinations {
     ROYAL_FLUSH("8",10);
     private final String viewCombinationInNumber;
     private final Integer power;
-    public Integer countInvolvedCard;
 
     PokerCombinations(String viewCombinationInNumber, Integer power) {
         this.viewCombinationInNumber = viewCombinationInNumber;
@@ -35,6 +34,7 @@ public enum PokerCombinations {
             case "3":
                 pc = PokerCombinations.THREE_PAIR;
                 break;
+            case "32":
             case "23":
                 pc = PokerCombinations.FULL_HOUSE;
                 break;
@@ -54,8 +54,8 @@ public enum PokerCombinations {
                 pc = PokerCombinations.ROYAL_FLUSH;
                 break;
             default:
-                throw new IllegalArgumentException("No enum constant value" + viewCombinationInNumber);
-                /*break*/
+                throw new IllegalArgumentException("No enum constant value - " + viewCombinationInNumber);
+                /* falls through. */
         }
         return pc;
     }

@@ -6,42 +6,30 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class PokerHand {
-    public static final Comparator<PokerHand> pokerHandComparator = new Comparator<PokerHand>() {
-        @Override
-        public int compare(PokerHand o1, PokerHand o2) {
-            Integer firstPower = o1.power;
-            Integer secondPower = o2.power;
-            if (o1.power.equals(o2.power)) {
-                firstPower += o1.combinationDeterminant.powerCombination;
-                secondPower += o2.combinationDeterminant.powerCombination;
-                if (firstPower.equals(secondPower)) {
-                    for (int i = o1.power + 1; i < o1.listPokerCard.size(); i++) {
-                        firstPower += o1.listPokerCard.get(i).getNumberCard().getValueCard();
-                        secondPower += o2.listPokerCard.get(i).getNumberCard().getValueCard();
-                    }
-                }
-                if (firstPower.equals(secondPower)) {
-                    firstPower += o1.listPokerCard.get(4).getNumberCard().getValueCard();
-                    secondPower += o2.listPokerCard.get(4).getNumberCard().getValueCard();
-                }
-            }
-            return Integer.compare(firstPower, secondPower);
-        }
-    };
-    private PokerCombinations pokerCombination;
-    private List<PokerCard> listPokerCard;
-    private String pokerHand;
-    private Integer power;
-    public CombinationDeterminant combinationDeterminant;
+    private final Integer power;
+    private final List<PokerCard> listPokerCard;
+    private final CombinationDeterminant combinationDeterminant;
+    private final String pokerHandInput;
 
-    public PokerHand(String pokerHand) {
-        this.pokerHand = pokerHand;
-        listPokerCard = convertToCollectionPokerCard(pokerHand);
-        listPokerCard.sort(new PokerCard());
+    public PokerHand(String pokerHandInput) throws PokerHandException {
+        if (pokerHandInput == null) {
+            throw new NullPointerException();
+        }
+        if (pokerHandInput.isEmpty()) {
+            throw new PokerHandException("Poker hand is empty");
+        }
+        this.pokerHandInput = pokerHandInput;
+        listPokerCard = convertToCollectionPokerCard(pokerHandInput);
+        if (listPokerCard.size() != 5) {
+            throw new PokerHandException("Poker hand less then 5 cards");
+        }
+        if (isDuplicateCards(listPokerCard)){
+            throw new PokerHandException("Poker card has duplicate suit");
+        }
+        listPokerCard.sort(PokerCard.compare);
         combinationDeterminant = new CombinationDeterminant(listPokerCard);
-        pokerCombination = combinationDeterminant.getPokerCombination();
+        PokerCombinations pokerCombination = combinationDeterminant.getPokerCombination();
         power = pokerCombination.getPower();
-        //power = determinePowerCombination(listPokerCard);
     }
 
     private List<PokerCard> convertToCollectionPokerCard(String pokerHand) {
@@ -53,73 +41,43 @@ public class PokerHand {
         return listCard;
     }
 
+    private boolean isDuplicateCards(List<PokerCard> pokerCards){
+        for (int i = 0; i < pokerCards.size()-1; i++){
+            if (pokerCards.get(i).equals(pokerCards.get(i+1))){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private PokerCard convertCardToPokerCard(String card) {
         return new PokerCard(NumberCard.getEnumFromValue((card.charAt(0) - 48)),
                 SuitCard.getEnumFromNameShort(String.valueOf(card.charAt(1))));
     }
 
-    private Integer determinePowerCombination(List<PokerCard> listPokerCard) {
-        Integer power = null;
-        switch (pokerCombination) {
-            case HIGH_CARD: {
-                power = listPokerCard.get(4).getNumberCard().getValueCard();
-                break;
+    public static final Comparator<PokerHand> pokerHandComparator = (o1, o2) -> {
+        Integer firstPower = o1.power;
+        Integer secondPower = o2.power;
+        if (o1.power.equals(o2.power)) {
+            firstPower += o1.combinationDeterminant.getPowerCombination();
+            secondPower += o2.combinationDeterminant.getPowerCombination();
+            if (firstPower.equals(secondPower)) {
+                for (int i = o1.power + 1; i < o1.listPokerCard.size(); i++) {
+                    firstPower += o1.listPokerCard.get(i).getNumberCard().getValueCard();
+                    secondPower += o2.listPokerCard.get(i).getNumberCard().getValueCard();
+                }
+                firstPower += o1.listPokerCard.get(4).getNumberCard().getValueCard();
+                secondPower += o2.listPokerCard.get(4).getNumberCard().getValueCard();
             }
-            case PAIR: {
-                power = pokerCombination.getPower();
-                break;
-            }
-            case TWO_PAIR: {
-                power = (pokerCombination.ordinal() + listPokerCard.get(4).getNumberCard().getValueCard()) * 10;
-                break;
-            }
-            case THREE_PAIR: {
-                power = (pokerCombination.ordinal() + listPokerCard.get(4).getNumberCard().getValueCard()) * 15;
-                break;
-            }
-            case STRAIGHT: {
-                power = pokerCombination.ordinal() * 20;
-                break;
-            }
-            case FLUSH: {
-                power = pokerCombination.ordinal() * 25;
-                break;
-            }
-            case FULL_HOUSE: {
-                power = pokerCombination.ordinal() * 30;
-                break;
-            }
-            case FOUR_PAIR: {
-                power = (pokerCombination.ordinal() + listPokerCard.get(4).getNumberCard().getValueCard()) * 35;
-                break;
-            }
-            case STRAIGHT_FLUSH: {
-                power = pokerCombination.ordinal() * 40;
-                break;
-            }
-            case ROYAL_FLUSH: {
-                power = pokerCombination.ordinal() * 50;
-                break;
-            }
-            default:
-                break;
         }
-        return power;
+        return Integer.compare(firstPower, secondPower);
+    };
+
+    public String getNamePokerCombination() {
+        return combinationDeterminant.getPokerCombination().name();
     }
 
-    public PokerCombinations getPokerCombination() {
-        return pokerCombination;
-    }
-
-    public String getPokerHand() {
-        return pokerHand;
-    }
-
-    public Integer getPower() {
-        return power;
-    }
-
-    public List<PokerCard> getListPokerCard() {
-        return listPokerCard;
+    public String getPokerHandInput() {
+        return pokerHandInput;
     }
 }
