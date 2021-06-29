@@ -21,17 +21,17 @@ public class PokerNegativeTest {
         PokerHand pokerHand = new PokerHand("5S 4D 2S 2S 3D");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void isNonSuitCardsInputPokerHand() throws PokerHandException {
         PokerHand pokerHand = new PokerHand("5S 4V 2Q 2S 3D");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void isNonValueCardsInputPokerHand() throws PokerHandException {
         PokerHand pokerHand = new PokerHand("5S 4S 2S 211D 3D");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = PokerHandException.class)
     public void isNonSameStringInputPokerHand() throws PokerHandException {
         PokerHand pokerHand = new PokerHand("some string");
     }

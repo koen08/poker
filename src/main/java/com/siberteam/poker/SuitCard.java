@@ -1,30 +1,31 @@
 package com.siberteam.poker;
 
-public enum SuitCard {
-    HEARTS,
-    SPADES,
-    DIAMONDS,
-    CLUBS;
+import java.util.HashMap;
+import java.util.Map;
 
-    public static SuitCard getEnumFromNameShort(String nameShort) {
-        SuitCard suitCard = null;
-        switch (nameShort) {
-            case "H":
-                suitCard = SuitCard.HEARTS;
-                break;
-            case "S":
-                suitCard = SuitCard.SPADES;
-                break;
-            case "D":
-                suitCard = SuitCard.DIAMONDS;
-                break;
-            case "C":
-                suitCard = SuitCard.CLUBS;
-                break;
-            default:
-                throw new IllegalArgumentException("No enum constant value - " + nameShort);
-                /* falls through. */
+public enum SuitCard {
+    HEARTS('H'),
+    SPADES('S'),
+    DIAMONDS('D'),
+    CLUBS('C');
+    private static final Map<Character, SuitCard> MAP_SUIT_CARD = new HashMap<>();
+    private final Character character;
+
+    SuitCard(Character character) {
+        this.character = character;
+    }
+
+    static {
+        for (SuitCard suitCard : values()) {
+            MAP_SUIT_CARD.put(suitCard.getCharacter(), suitCard);
         }
-        return suitCard;
+    }
+
+    public static SuitCard getEnumFromSuit(Character valueCard) {
+        return MAP_SUIT_CARD.get(valueCard);
+    }
+
+    public Character getCharacter() {
+        return character;
     }
 }

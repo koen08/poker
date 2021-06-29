@@ -51,8 +51,8 @@ public class PokerHand {
     }
 
     private PokerCard convertCardToPokerCard(String card) {
-        return new PokerCard(NumberCard.getEnumFromValueCard((card.charAt(0) - 48)),
-                SuitCard.getEnumFromNameShort(String.valueOf(card.charAt(1))));
+        return new PokerCard(NumberCard.getEnumFromValueCard((card.charAt(0))),
+                SuitCard.getEnumFromSuit(card.charAt(1)));
     }
 
     public static final Comparator<PokerHand> pokerHandComparator = (o1, o2) -> {

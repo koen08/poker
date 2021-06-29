@@ -4,37 +4,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum NumberCard {
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(36),
-    JACK(26),
-    QUEEN(33),
-    KING(27),
-    ACE(17);
-    private static final Map<Integer, NumberCard> MAP_NUMBER_CARD = new HashMap<>();
-    private final Integer valueCard;
+    TWO('2'),
+    THREE('3'),
+    FOUR('4'),
+    FIVE('5'),
+    SIX('6'),
+    SEVEN('7'),
+    EIGHT('8'),
+    NINE('9'),
+    TEN('T'),
+    JACK('J'),
+    QUEEN('Q'),
+    KING('K'),
+    ACE('A');
+    private static final Map<Character, NumberCard> MAP_NUMBER_CARD = new HashMap<>();
+    private final Character character;
 
-    NumberCard(Integer valueCard) {
-        this.valueCard = valueCard;
+    NumberCard(Character character) {
+        this.character = character;
     }
 
     static {
         for (NumberCard numberCard : values()) {
-            MAP_NUMBER_CARD.put(numberCard.getValueCard(), numberCard);
+            MAP_NUMBER_CARD.put(numberCard.getCharacter(), numberCard);
         }
     }
 
-    public static NumberCard getEnumFromValueCard(Integer valueCard) {
+    public static NumberCard getEnumFromValueCard(Character valueCard) {
         return MAP_NUMBER_CARD.get(valueCard);
     }
 
-    public Integer getValueCard() {
-        return valueCard;
+    public Character getCharacter() {
+        return character;
     }
 }

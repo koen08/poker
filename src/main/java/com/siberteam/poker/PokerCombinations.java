@@ -1,55 +1,37 @@
 package com.siberteam.poker;
 
-public enum PokerCombinations {
-    HIGH_CARD,
-    PAIR,
-    TWO_PAIR,
-    THREE_PAIR,
-    STRAIGHT,
-    FLUSH,
-    FULL_HOUSE,
-    FOUR_PAIR,
-    STRAIGHT_FLUSH,
-    ROYAL_FLUSH;
+import java.util.HashMap;
+import java.util.Map;
 
-    public static PokerCombinations getEnumFromViewCombinationInNumber(String viewCombinationInNumber) {
-        PokerCombinations pc;
-        switch (viewCombinationInNumber) {
-            case "1":
-                pc = PokerCombinations.HIGH_CARD;
-                break;
-            case "2":
-                pc = PokerCombinations.PAIR;
-                break;
-            case "22":
-                pc = PokerCombinations.TWO_PAIR;
-                break;
-            case "3":
-                pc = PokerCombinations.THREE_PAIR;
-                break;
-            case "32":
-            case "23":
-                pc = PokerCombinations.FULL_HOUSE;
-                break;
-            case "4":
-                pc = PokerCombinations.FOUR_PAIR;
-                break;
-            case "5":
-                pc = PokerCombinations.STRAIGHT;
-                break;
-            case "6":
-                pc = PokerCombinations.FLUSH;
-                break;
-            case "7":
-                pc = PokerCombinations.STRAIGHT_FLUSH;
-                break;
-            case "8":
-                pc = PokerCombinations.ROYAL_FLUSH;
-                break;
-            default:
-                throw new IllegalArgumentException("No enum constant value - " + viewCombinationInNumber);
-                /* falls through. */
+public enum PokerCombinations {
+    HIGH_CARD(10),
+    PAIR(20),
+    TWO_PAIR(4),
+    THREE_PAIR(30),
+    STRAIGHT(50),
+    FLUSH(null),
+    FULL_HOUSE(5),
+    FOUR_PAIR(40),
+    STRAIGHT_FLUSH(null),
+    ROYAL_FLUSH(null);
+    private static final Map<Integer, PokerCombinations> MAP_COMBINATION_CARD = new HashMap<>();
+    private final Integer valueCombination;
+
+    PokerCombinations(Integer valueCombination) {
+        this.valueCombination = valueCombination;
+    }
+
+    static {
+        for (PokerCombinations pokerCombinations : values()) {
+            MAP_COMBINATION_CARD.put(pokerCombinations.getNameCombination(), pokerCombinations);
         }
-        return pc;
+    }
+
+    public static PokerCombinations getEnumFromNameCombination(Integer valueCombination) {
+        return MAP_COMBINATION_CARD.get(valueCombination);
+    }
+
+    public Integer getNameCombination() {
+        return valueCombination;
     }
 }

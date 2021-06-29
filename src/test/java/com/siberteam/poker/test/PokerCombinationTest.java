@@ -47,7 +47,7 @@ public class PokerCombinationTest {
 
     @Test
     public void isFullHouseCombination() throws PokerHandException {
-        PokerHand pokerHand = new PokerHand("5C 5D 5S 8C 8H");
+        PokerHand pokerHand = new PokerHand("5C 5D 8S 8C 8H");
         assertEquals(PokerCombinations.FULL_HOUSE, pokerHand.getPokerCombination());
     }
 

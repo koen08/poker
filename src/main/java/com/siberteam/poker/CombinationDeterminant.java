@@ -1,5 +1,6 @@
 package com.siberteam.poker;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -59,7 +60,7 @@ public class CombinationDeterminant {
     }
 
     public PokerCombinations definePairsNonSuit(List<PokerCard> listPokerCard) {
-        Map<Integer, Integer> map = new TreeMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < listPokerCard.size() - 1; i++) {
             if (listPokerCard.get(i).getNumberCard().equals(
                     listPokerCard.get(i + 1).getNumberCard())) {
@@ -77,12 +78,19 @@ public class CombinationDeterminant {
     }
 
     public PokerCombinations defineCombinationWithoutSuit(Map<Integer, Integer> map) {
-        StringBuilder keyCard = new StringBuilder();
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            keyCard.append(entry.getValue());
-            powerCombination += entry.getValue() * entry.getKey();
+        Integer valueCombination = 0;
+        if (map.size() == 1) {
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                valueCombination += entry.getValue() * 10;
+                powerCombination += entry.getValue() * entry.getKey();
+            }
+        } else {
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                valueCombination += entry.getValue();
+                powerCombination += entry.getValue() * entry.getKey();
+            }
         }
-        return PokerCombinations.getEnumFromViewCombinationInNumber(keyCard.toString());
+        return PokerCombinations.getEnumFromNameCombination(valueCombination);
     }
 
     public PokerCombinations getPokerCombination() {
