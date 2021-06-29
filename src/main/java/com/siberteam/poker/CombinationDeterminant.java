@@ -3,7 +3,6 @@ package com.siberteam.poker;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class CombinationDeterminant {
     private final PokerCombinations pokerCombination;
@@ -44,7 +43,7 @@ public class CombinationDeterminant {
 
     private Integer calculatePowerCombinationsWithSuit(List<PokerCard> listPokerCard) {
         int power = 0;
-        for (PokerCard pokerCard : listPokerCard){
+        for (PokerCard pokerCard : listPokerCard) {
             power += pokerCard.getNumberCard().ordinal();
         }
         return power;

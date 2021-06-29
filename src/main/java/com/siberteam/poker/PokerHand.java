@@ -23,7 +23,7 @@ public class PokerHand {
         if (listPokerCard.size() != 5) {
             throw new PokerHandException("Poker hand less then 5 cards");
         }
-        if (isDuplicateCards(listPokerCard)){
+        if (isDuplicateCards(listPokerCard)) {
             throw new PokerHandException("Poker card has duplicate suit");
         }
         listPokerCard.sort(PokerCard.compare);
@@ -41,9 +41,9 @@ public class PokerHand {
         return listCard;
     }
 
-    private boolean isDuplicateCards(List<PokerCard> pokerCards){
-        for (int i = 0; i < pokerCards.size()-1; i++){
-            if (pokerCards.get(i).equals(pokerCards.get(i+1))){
+    private boolean isDuplicateCards(List<PokerCard> pokerCards) {
+        for (int i = 0; i < pokerCards.size() - 1; i++) {
+            if (pokerCards.get(i).equals(pokerCards.get(i + 1))) {
                 return true;
             }
         }
