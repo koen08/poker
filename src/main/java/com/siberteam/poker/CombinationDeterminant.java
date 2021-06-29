@@ -19,8 +19,8 @@ public class CombinationDeterminant {
     public boolean isCombinationWithOneSuit(List<PokerCard> listPokerCard) {
         int counter = 0;
         for (int i = 0; i < listPokerCard.size() - 1; i++) {
-            if (listPokerCard.get(i).getSuitCard().getValueSuit().equals(
-                    listPokerCard.get(i + 1).getSuitCard().getValueSuit())) {
+            if (listPokerCard.get(i).getSuitCard().equals(
+                    listPokerCard.get(i + 1).getSuitCard())) {
                 counter++;
             }
         }
@@ -29,8 +29,8 @@ public class CombinationDeterminant {
 
     public PokerCombinations determineCombinationsSameSuit(List<PokerCard> listPokerCard) {
         PokerCombinations pc;
-        if (listPokerCard.get(0).getNumberCard().getValueCard().equals(NumberCard.TEN.getValueCard())
-                && listPokerCard.get(4).getNumberCard().getValueCard().equals(NumberCard.ACE.getValueCard())) {
+        if (listPokerCard.get(0).getNumberCard().equals(NumberCard.TEN)
+                && listPokerCard.get(4).getNumberCard().equals(NumberCard.ACE)) {
             pc = PokerCombinations.ROYAL_FLUSH;
         } else if (isNumberInOrder(listPokerCard)) {
             pc = PokerCombinations.STRAIGHT_FLUSH;
@@ -42,9 +42,9 @@ public class CombinationDeterminant {
     }
 
     private Integer calculatePowerCombinationsWithSuit(List<PokerCard> listPokerCard) {
-        Integer power = 0;
+        int power = 0;
         for (PokerCard pokerCard : listPokerCard){
-            power += pokerCard.getNumberCard().getValueCard();
+            power += pokerCard.getNumberCard().ordinal();
         }
         return power;
     }
@@ -52,8 +52,8 @@ public class CombinationDeterminant {
     public boolean isNumberInOrder(List<PokerCard> listPokerCard) {
         int counterOrder = 0;
         for (int i = 0; i < listPokerCard.size() - 1; i++) {
-            counterOrder += listPokerCard.get(i + 1).getNumberCard().getValueCard()
-                    - listPokerCard.get(i).getNumberCard().getValueCard();
+            counterOrder += listPokerCard.get(i + 1).getNumberCard().ordinal()
+                    - listPokerCard.get(i).getNumberCard().ordinal();
         }
         return counterOrder == 4;
     }
@@ -61,17 +61,17 @@ public class CombinationDeterminant {
     public PokerCombinations definePairsNonSuit(List<PokerCard> listPokerCard) {
         Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < listPokerCard.size() - 1; i++) {
-            if (listPokerCard.get(i).getNumberCard().getValueCard().equals(
-                    listPokerCard.get(i + 1).getNumberCard().getValueCard())) {
-                Integer count = map.getOrDefault(listPokerCard.get(i).getNumberCard().getValueCard(), 1);
+            if (listPokerCard.get(i).getNumberCard().equals(
+                    listPokerCard.get(i + 1).getNumberCard())) {
+                Integer count = map.getOrDefault(listPokerCard.get(i).getNumberCard().ordinal(), 1);
                 count++;
-                map.put(listPokerCard.get(i).getNumberCard().getValueCard(), count);
+                map.put(listPokerCard.get(i).getNumberCard().ordinal(), count);
             }
         }
         if (map.isEmpty()) {
             if (isNumberInOrder(listPokerCard)) {
-                map.put(listPokerCard.stream().mapToInt(i -> i.getNumberCard().getValueCard()).sum(), 5);
-            } else map.put(listPokerCard.get(4).getNumberCard().getValueCard(), 1);
+                map.put(listPokerCard.stream().mapToInt(i -> i.getNumberCard().ordinal()).sum(), 5);
+            } else map.put(listPokerCard.get(4).getNumberCard().ordinal(), 1);
         }
         return defineCombinationWithoutSuit(map);
     }

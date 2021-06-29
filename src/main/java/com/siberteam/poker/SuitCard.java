@@ -1,17 +1,10 @@
 package com.siberteam.poker;
 
 public enum SuitCard {
-    HEARTS(1, "H"),
-    SPADES(2, "S"),
-    DIAMONDS(3, "D"),
-    CLUBS(4, "C");
-    private final Integer valueSuit;
-    private final String nameShort;
-
-    SuitCard(Integer valueSuit, String nameShort) {
-        this.valueSuit = valueSuit;
-        this.nameShort = nameShort;
-    }
+    HEARTS,
+    SPADES,
+    DIAMONDS,
+    CLUBS;
 
     public static SuitCard getEnumFromNameShort(String nameShort) {
         SuitCard suitCard = null;
@@ -33,13 +26,5 @@ public enum SuitCard {
                 /* falls through. */
         }
         return suitCard;
-    }
-
-    public Integer getValueSuit() {
-        return valueSuit;
-    }
-
-    public String getNameShort() {
-        return nameShort;
     }
 }

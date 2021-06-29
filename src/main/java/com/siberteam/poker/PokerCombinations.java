@@ -1,23 +1,16 @@
 package com.siberteam.poker;
 
 public enum PokerCombinations {
-    HIGH_CARD("1", 1),
-    PAIR("2", 2),
-    TWO_PAIR("22", 3),
-    THREE_PAIR("3", 4),
-    STRAIGHT("5",5),
-    FLUSH("6", 6),
-    FULL_HOUSE("23", 7),
-    FOUR_PAIR("4",8),
-    STRAIGHT_FLUSH("7",9),
-    ROYAL_FLUSH("8",10);
-    private final String viewCombinationInNumber;
-    private final Integer power;
-
-    PokerCombinations(String viewCombinationInNumber, Integer power) {
-        this.viewCombinationInNumber = viewCombinationInNumber;
-        this.power = power;
-    }
+    HIGH_CARD,
+    PAIR,
+    TWO_PAIR,
+    THREE_PAIR,
+    STRAIGHT,
+    FLUSH,
+    FULL_HOUSE,
+    FOUR_PAIR,
+    STRAIGHT_FLUSH,
+    ROYAL_FLUSH;
 
     public static PokerCombinations getEnumFromViewCombinationInNumber(String viewCombinationInNumber) {
         PokerCombinations pc;
@@ -58,13 +51,5 @@ public enum PokerCombinations {
                 /* falls through. */
         }
         return pc;
-    }
-
-    public String getViewCombinationInNumber() {
-        return viewCombinationInNumber;
-    }
-
-    public Integer getPower() {
-        return power;
     }
 }

@@ -18,7 +18,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2C 5S 6D QD TD"));
         pokerHandList.add(new PokerHand("2C 2S 6D QD TD"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.PAIR.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.PAIR, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2D 2H 6D QD QC"));
         pokerHandList.add(new PokerHand("2C 2S 6D QD TD"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.TWO_PAIR.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.TWO_PAIR, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -36,7 +36,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2D 2H 2D 6D QC"));
         pokerHandList.add(new PokerHand("2C 2S 6D QD QS"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.THREE_PAIR.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.THREE_PAIR, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2D 3H 4D 5D 6C"));
         pokerHandList.add(new PokerHand("2C 2S 2D TD QS"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.STRAIGHT.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.STRAIGHT, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2D 3H 4D 5D 6C"));
         pokerHandList.add(new PokerHand("2C 6C 3C QC TC"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.FLUSH.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.FLUSH, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2C 6C 3C QC TC"));
         pokerHandList.add(new PokerHand("2C 2S 2D QD QS"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.FULL_HOUSE.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.FULL_HOUSE, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2C 2S 2D 2C TC"));
         pokerHandList.add(new PokerHand("2C 2S 2D QD QS"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.FOUR_PAIR.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.FOUR_PAIR, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("2C 2S 2D 2C TC"));
         pokerHandList.add(new PokerHand("2C 3C 4C 5C 6C"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.STRAIGHT_FLUSH.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.STRAIGHT_FLUSH, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class PokerSortTest {
         pokerHandList.add(new PokerHand("TC JC QC KC AC"));
         pokerHandList.add(new PokerHand("2C 3C 4C 5C 6C"));
         pokerHandList.sort(PokerHand.pokerHandComparator);
-        assertEquals(PokerCombinations.ROYAL_FLUSH.name(), pokerHandList.get(1).getNamePokerCombination());
+        assertEquals(PokerCombinations.ROYAL_FLUSH, pokerHandList.get(1).getPokerCombination());
     }
 
     @Test

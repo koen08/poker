@@ -29,7 +29,7 @@ public class PokerHand {
         listPokerCard.sort(PokerCard.compare);
         combinationDeterminant = new CombinationDeterminant(listPokerCard);
         PokerCombinations pokerCombination = combinationDeterminant.getPokerCombination();
-        power = pokerCombination.getPower();
+        power = pokerCombination.ordinal() + 1;
     }
 
     private List<PokerCard> convertToCollectionPokerCard(String pokerHand) {
@@ -51,7 +51,7 @@ public class PokerHand {
     }
 
     private PokerCard convertCardToPokerCard(String card) {
-        return new PokerCard(NumberCard.getEnumFromValue((card.charAt(0) - 48)),
+        return new PokerCard(NumberCard.getEnumFromValueCard((card.charAt(0) - 48)),
                 SuitCard.getEnumFromNameShort(String.valueOf(card.charAt(1))));
     }
 
@@ -63,18 +63,18 @@ public class PokerHand {
             secondPower += o2.combinationDeterminant.getPowerCombination();
             if (firstPower.equals(secondPower)) {
                 for (int i = o1.power + 1; i < o1.listPokerCard.size(); i++) {
-                    firstPower += o1.listPokerCard.get(i).getNumberCard().getValueCard();
-                    secondPower += o2.listPokerCard.get(i).getNumberCard().getValueCard();
+                    firstPower += o1.listPokerCard.get(i).getNumberCard().ordinal();
+                    secondPower += o2.listPokerCard.get(i).getNumberCard().ordinal();
                 }
-                firstPower += o1.listPokerCard.get(4).getNumberCard().getValueCard();
-                secondPower += o2.listPokerCard.get(4).getNumberCard().getValueCard();
+                firstPower += o1.listPokerCard.get(4).getNumberCard().ordinal();
+                secondPower += o2.listPokerCard.get(4).getNumberCard().ordinal();
             }
         }
         return Integer.compare(firstPower, secondPower);
     };
 
-    public String getNamePokerCombination() {
-        return combinationDeterminant.getPokerCombination().name();
+    public PokerCombinations getPokerCombination() {
+        return combinationDeterminant.getPokerCombination();
     }
 
     public String getPokerHandInput() {

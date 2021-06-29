@@ -4,8 +4,8 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class PokerCard {
-    private NumberCard numberCard;
-    private SuitCard suitCard;
+    private final NumberCard numberCard;
+    private final SuitCard suitCard;
 
     public PokerCard(NumberCard numberCard, SuitCard suitCard) {
         this.numberCard = numberCard;
@@ -16,27 +16,19 @@ public class PokerCard {
         return numberCard;
     }
 
-    public void setNumberCard(NumberCard numberCard) {
-        this.numberCard = numberCard;
-    }
-
     public SuitCard getSuitCard() {
         return suitCard;
     }
 
-    public void setSuitCard(SuitCard suitCard) {
-        this.suitCard = suitCard;
-    }
-
-    public static final Comparator<PokerCard> compare = Comparator.comparing(o -> o.numberCard.getValueCard());
+    public static final Comparator<PokerCard> compare = Comparator.comparing(o -> o.numberCard.ordinal());
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PokerCard pokerCard = (PokerCard) o;
-        return numberCard.getValueCard().equals(pokerCard.numberCard.getValueCard())
-                && suitCard.getValueSuit().equals(pokerCard.suitCard.getValueSuit());
+        return numberCard.equals(pokerCard.numberCard)
+                && suitCard.equals(pokerCard.suitCard);
     }
 
     @Override
